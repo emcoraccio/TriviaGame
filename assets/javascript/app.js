@@ -40,11 +40,13 @@ $(document).ready(function () {
   // initializing category choice
   $('select').formSelect();
 
+
   // helper function to shuffle answers array
   let shuffle = function (arr) {
     for (var j, x, i = arr.length; i; j = parseInt(Math.random() * i), x = arr[--i], arr[i] = arr[j], arr[j] = x);
     return arr;
   };
+
 
   // retrieving data from the API
   let getData = function () {
@@ -59,30 +61,39 @@ $(document).ready(function () {
     });
   }
 
+
   let setQuestion = function () {
     thisQuestion = triviaData[triviaQuestion].question
     let $p = $("<p>").html(thisQuestion)
     $($question).append($p);
   }
 
+
   let setAnswers = function () {
     correctAnswer = triviaData[triviaQuestion].correct_answer;
     answers.push(correctAnswer);
+
     triviaData[triviaQuestion].incorrect_answers.forEach(el => {
       answers.push(el)
       console.log(answers);
     })
-    shuffle(answers);
 
-    console.log(answers);
+    shuffle(answers);
+    $($answer1).html(answers[0]);
+    $($answer2).html(answers[1]);
+    $($answer3).html(answers[2]);
+    $($answer4).html(answers[3]);
+
   }
 
   let startGame = function () {
     $($screen1, $screen3).fadeOut();
+
     setTimeout(function () {
       $($screen2).fadeIn()
       timer = setTimeout(countdown, 1000);
     }, 1000)
+
   }
 
   //Timer code

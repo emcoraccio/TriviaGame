@@ -77,13 +77,15 @@ div.question {
 }
 
 div.answer {
+  padding: 5px;
+  margin: 10px;
   color: #689B9F;
   background-color: #C4E1E3;
 }
 
 div.answer:hover {
   color: #233435;
-  background-color: #ACD5D8;
+  background-color: #689B9F;
 }
 
 
