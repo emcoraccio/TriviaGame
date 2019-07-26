@@ -19,6 +19,31 @@ body {
 /* intro screen styling */
 section.screen1 {
   display: block;
+  font-size: 24px;
+}
+
+/* category choices styling */
+label.category-options {
+  color: #7EBDC2;
+}
+
+option {
+  color: #5E0B15;
+}
+
+div.input-field {
+  border-radius: 5px;
+  background: #B8DBDD;
+}
+
+/* play button styling */
+button.play {
+  display: none;
+  background: #B8DBDD;
+}
+
+button.play:hover {
+  background: #51797C;
 }
 
 
@@ -28,10 +53,37 @@ section.screen2 {
 }
 
 /* timer styling */
-div.countdownArea {
+div.countdown-area {
+  justify-content: center;
+}
+
+p.countdown {
   padding: 5px;
+  border-radius: 5px;
   font-size: 20px;
-  background-color: #EFE6DD
+  background-color: #C4A6A9;
+  color: #5E0B15;
+}
+
+div.question, div.answer {
+  padding: 2px;
+  border-radius: 5px;
+  font-size: 24px;
+}
+
+div.question {
+  color: #00284D;
+  background-color: #A2B0BE;
+}
+
+div.answer {
+  color: #689B9F;
+  background-color: #C4E1E3;
+}
+
+div.answer:hover {
+  color: #233435;
+  background-color: #ACD5D8;
 }
 
 
