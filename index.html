@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
-  <link rel="stylesheet" href="./assets/">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <link rel="stylesheet" href="./assets/css/style.css">
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -14,7 +14,120 @@
 
 <body>
 
+  <main>
+    <!-- beginning screen asks user to pick option -->
+    <section class="screen1">
+      <div class="container">
 
+        <div class="row">
+          <div class="col s12">
+            <h1>TRIVIA</h1>
+          </div>
+        </div>
+
+        <!-- instructions row -->
+        <div class="row">
+          <div class="col s12 m10 offset-m1">
+            <p class="instructions center-align">
+              Pick a category from the options below. <br>
+              You will have 30 seconds to guess the correct answer <br>
+              There are 10 questions for each category <br>
+            </p>
+            <p class="luck">GOOD LUCK!</p>
+          </div>
+        </div>
+
+        <!-- Selecting a category -->
+        <div class="row">
+          <div class="col s12 m6 offset-m3 input-field">
+            <select class="category-choices">
+              <option value="" disabled selected>Choose a category</option>
+              <option value="9">General Knowledge</option>
+              <option value="20">Mythology</option>
+              <option value="29">Comics</option>
+            </select>
+            <label>Trivia Options</label>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- game play screen - shows questions, timer and potential answers -->
+    <section class="screen2">
+
+      <div class="container">
+
+        <div class="row">
+
+          <div class="col s12">
+            <h1 class="title">TRIVIA</h1>
+          </div>
+
+        </div>
+
+        <div class="row">
+
+          <div class="col s4 offset-s4">
+            <div class="countdownArea">
+              <p class="countdown">Time Left: 30</p>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="col s12 m6 offset-m3">
+            <div class="question">
+
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+
+          <div class="col s12 m5">
+            <div class="answer1">
+
+            </div>
+          </div>
+
+          <div class="col s12 m5">
+            <div class="answer2">
+
+            </div>
+          </div>
+
+          <div class="col s12 m5">
+            <div class="answer3">
+
+            </div>
+          </div>
+
+          <div class="col s12 m5">
+            <div class="answer4">
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- end of game screen - displays how many questions were correct and incorrect -->
+    <section class="screen3">
+
+    </section>
+
+  </main>
+
+  <!-- <footer>
+    Photo by Paweł Czerwiński on Unsplash
+  </footer> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <script src="./assets/javascript/app.js"></script>
 </body>
 
