@@ -31,6 +31,7 @@ $(document).ready(function () {
   let $timer = $("p.countdown");
 
   let $question = $("div.question");
+  let $answer = $("div.answer")
   let $answer1 = $("div.answer1");
   let $answer2 = $("div.answer2");
   let $answer3 = $("div.answer3");
@@ -71,7 +72,8 @@ $(document).ready(function () {
 
 
   let setAnswers = function () {
-    correctAnswer = triviaData[triviaQuestion].correct_answer;
+    correctAnswer = decodeURI(triviaData[triviaQuestion].correct_answer);
+    console.log(correctAnswer);
     answers.push(correctAnswer);
 
     triviaData[triviaQuestion].incorrect_answers.forEach(el => {
@@ -96,47 +98,13 @@ $(document).ready(function () {
 
       if (userAnswer === correctAnswer) {
         $(event.target).css({ "background-color": "#A6D49F", "color": "#2E3A2C" })
-        console.log(true);
+
       }
       else {
         $(event.target).css({ "background-color": "#5E0B15", "color": "#1A0306" })
 
-        setTimeout(function () {
-          for (i = 0; i < 4; i++) {
+        setTimeout(showCorrect, 500);
 
-            let answerI = $( "div.answer" ).get( i );
-
-            if ($(answerI).text() === correctAnswer){
-              let color = 6;
-
-              function colorSwap () {
-                color--;
-
-                if (color % 2 === 0){
-                  $(answerI).css({ "background-color": "#A6D49F", "color": "#2E3A2C" })
-                }
-                else {
-                  $(answerI).css({ "background-color": "#C4E1E3", "color": "#689B9F" })
-                }
-
-                if (color === 0) {
-                  clearTimeout(correctColor);
-                  return false;
-                }
-                else {
-                  setTimeout(colorSwap, 250)
-                }
-
-              }
-              let correctColor = setTimeout(colorSwap, 1000);
-            }
-            else {
-              $(answerI).fadeOut("slow");
-            }
-          }
-
-          console.log($answer1.text());
-        }, 500)
       }
     }
 
@@ -144,16 +112,72 @@ $(document).ready(function () {
     setTimeout(newQuestion, 5000);
   }
 
-  let newQuestion = function () {
-    $("div.answer, div.question").empty();
-    answers=[];
-    userAnswer=""
-    setQuestion();
-    setAnswers();
-    setTimeout(countdown, 1000);
+  function showCorrect() {
+    for (i = 0; i < 4; i++) {
+
+      let answerI = $($answer).get(i);
+
+      if ($(answerI).text() === correctAnswer) {
+        let color = 6;
+
+        // blinking the correct color answer
+        function colorSwap() {
+          color--;
+
+          if (color % 2 === 0) {
+            $(answerI).css({ "background-color": "#A6D49F", "color": "#2E3A2C" })
+          }
+          else {
+            $(answerI).css({ "background-color": "#C4E1E3", "color": "#689B9F" })
+          }
+
+          // stop the color from blinking
+          if (color === 0) {
+            clearTimeout(correctColor);
+            return false;
+          }
+          else {
+            setTimeout(colorSwap, 250)
+          }
+
+        }
+        let correctColor = setTimeout(colorSwap, 1000);
+      }
+      else {
+        $(answerI).fadeOut("slow");
+      }
+    }
   }
 
-  
+
+  let resetValues = function () {
+    answers = [];
+    userAnswer = "";
+    color = 6;
+    seconds = 30;
+    $($timer).text(`Time Left: ${seconds}`);
+    $($answer).empty().show();
+    $($question).empty();
+    $($timer).css({ "background-color": "#C4A6A9", "color": "#5E0B15" })
+
+    for (i = 0; i < 4; i++) {
+
+      let answerI = $($answer).get(i);
+      $(answerI).css({ "background-color": "#C4E1E3", "color": "#689B9F" })
+    }
+  }
+
+
+  let newQuestion = function () {
+    if(triviaQuestion < 9) {
+      resetValues();
+      setQuestion();
+      setAnswers();
+      setTimeout(countdown, 1000);
+    }
+  }
+
+
   let startGame = function () {
     $($screen1, $screen3).fadeOut();
 
@@ -186,11 +210,9 @@ $(document).ready(function () {
     }
   }
 
-
-
-
-
+  // events
   $("select.category-choices").on("change", function (event) {
+    resetValues();
     queryURL = `https://opentdb.com/api.php?amount=10&category=${this.value}&type=multiple`
     getData();
     $("button.play").show();
@@ -205,13 +227,4 @@ $(document).ready(function () {
 
   });
 
-
-
-
-
-
-
-
-
-
-})
+});
