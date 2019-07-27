@@ -19,6 +19,7 @@ $(document).ready(function () {
   let correctAnswer;
   let answers = [];
   let triviaQuestion = 0;
+  let userAnswer;
   let instance = M.FormSelect.getInstance("option");
 
 
@@ -79,6 +80,8 @@ $(document).ready(function () {
     })
 
     shuffle(answers);
+    let answer1 = $("<p>").text(answers[0]);
+
     $($answer1).html(answers[0]);
     $($answer2).html(answers[1]);
     $($answer3).html(answers[2]);
@@ -86,6 +89,71 @@ $(document).ready(function () {
 
   }
 
+
+  let checkAnswer = () => {
+    if (!userAnswer) {
+      userAnswer = event.target.textContent;
+
+      if (userAnswer === correctAnswer) {
+        $(event.target).css({ "background-color": "#A6D49F", "color": "#2E3A2C" })
+        console.log(true);
+      }
+      else {
+        $(event.target).css({ "background-color": "#5E0B15", "color": "#1A0306" })
+
+        setTimeout(function () {
+          for (i = 0; i < 4; i++) {
+
+            let answerI = $( "div.answer" ).get( i );
+
+            if ($(answerI).text() === correctAnswer){
+              let color = 6;
+
+              function colorSwap () {
+                color--;
+
+                if (color % 2 === 0){
+                  $(answerI).css({ "background-color": "#A6D49F", "color": "#2E3A2C" })
+                }
+                else {
+                  $(answerI).css({ "background-color": "#C4E1E3", "color": "#689B9F" })
+                }
+
+                if (color === 0) {
+                  clearTimeout(correctColor);
+                  return false;
+                }
+                else {
+                  setTimeout(colorSwap, 250)
+                }
+
+              }
+              let correctColor = setTimeout(colorSwap, 1000);
+            }
+            else {
+              $(answerI).fadeOut("slow");
+            }
+          }
+
+          console.log($answer1.text());
+        }, 500)
+      }
+    }
+
+    triviaQuestion++
+    setTimeout(newQuestion, 5000);
+  }
+
+  let newQuestion = function () {
+    $("div.answer, div.question").empty();
+    answers=[];
+    userAnswer=""
+    setQuestion();
+    setAnswers();
+    setTimeout(countdown, 1000);
+  }
+
+  
   let startGame = function () {
     $($screen1, $screen3).fadeOut();
 
@@ -109,7 +177,7 @@ $(document).ready(function () {
       $($timer).css({ "background-color": "#5E0B15", "color": "#C4A6A9" })
     }
 
-    if (seconds === 0) {
+    if (seconds === 0 || userAnswer) {
       clearTimeout(timer);
       return false;
     }
@@ -126,11 +194,16 @@ $(document).ready(function () {
     queryURL = `https://opentdb.com/api.php?amount=10&category=${this.value}&type=multiple`
     getData();
     $("button.play").show();
-  })
+  });
 
   $("button.play").on("click", function () {
     startGame();
-  })
+  });
+
+  $("div.answer").on("click", function () {
+    checkAnswer();
+
+  });
 
 
 
