@@ -72,7 +72,8 @@ $(document).ready(function () {
 
 
   let setAnswers = function () {
-    correctAnswer = decodeURI(triviaData[triviaQuestion].correct_answer);
+    correctAnswer = $("<p>").html(triviaData[triviaQuestion].correct_answer)
+    correctAnswer = correctAnswer.text();
     console.log(correctAnswer);
     answers.push(correctAnswer);
 
