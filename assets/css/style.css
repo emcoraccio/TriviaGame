@@ -37,12 +37,12 @@ div.input-field {
 }
 
 /* play button styling */
-button.play {
+button.play, button.play-again {
   display: none;
   background: #B8DBDD;
 }
 
-button.play:hover {
+button.play:hover, button.play-again:hover {
   background: #51797C;
 }
 
@@ -50,6 +50,10 @@ button.play:hover {
 /* question screen styling */
 section.screen2 {
   display: none;
+}
+
+p.questionNum {
+  font-size: 24px;
 }
 
 /* timer styling */
@@ -69,6 +73,7 @@ div.question, div.answer {
   padding: 2px;
   border-radius: 5px;
   font-size: 24px;
+  font-family: 'Julius Sans One', sans-serif;
 }
 
 div.question {
@@ -79,18 +84,23 @@ div.question {
 div.answer {
   padding: 5px;
   margin: 10px;
+  cursor: pointer;
+  min-height: 50px;
   color: #689B9F;
   background-color: #C4E1E3;
-}
-
-div.answer:hover {
-  color: #233435;
-  background-color: #689B9F;
 }
 
 
 /* end of game screen styling */
 
 section.screen3 {
+  display: none;
+}
+
+p.numCorrect, p.numIncorrect {
+  font-size: 20px;
+}
+
+button.play-again {
   display: none;
 }

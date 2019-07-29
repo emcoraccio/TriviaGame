@@ -18,8 +18,11 @@ $(document).ready(function () {
   let timer;
   let correctAnswer;
   let answers = [];
-  let triviaQuestion = 0;
   let userAnswer;
+  let questionNumber = 1;
+  let triviaQuestion = 0;
+  let numberCorrect = 0;
+  let numberIncorrect = 0;
   let instance = M.FormSelect.getInstance("option");
 
 
@@ -29,6 +32,7 @@ $(document).ready(function () {
   let $screen3 = $("section.screen3");
 
   let $timer = $("p.countdown");
+  let $questionNum = $("p.questionNum")
 
   let $question = $("div.question");
   let $answer = $("div.answer")
@@ -36,6 +40,9 @@ $(document).ready(function () {
   let $answer2 = $("div.answer2");
   let $answer3 = $("div.answer3");
   let $answer4 = $("div.answer4");
+
+  let $correctResponses = $("p.numCorrect")
+  let $incorrectResponses = $("p.numIncorrect")
 
 
 
@@ -53,31 +60,34 @@ $(document).ready(function () {
   // retrieving data from the API
   let getData = function () {
     $.get(queryURL).then(function (response) {
+
       triviaData = response.results;
       console.log(triviaData);
       let category = triviaData[0].category.toUpperCase();
       $("h1.title").text(`${category} TRIVIA`)
 
-      setQuestion();
-      setAnswers();
+      setQuestion(triviaData);
+      setAnswers(triviaData);
     });
   }
 
 
-  let setQuestion = function () {
-    thisQuestion = triviaData[triviaQuestion].question
+  let setQuestion = function (trivia) {
+
+    console.log(triviaQuestion);
+    thisQuestion = trivia[triviaQuestion].question
     let $p = $("<p>").html(thisQuestion)
     $($question).append($p);
   }
 
 
-  let setAnswers = function () {
-    correctAnswer = $("<p>").html(triviaData[triviaQuestion].correct_answer)
+  let setAnswers = function (trivia) {
+    correctAnswer = $("<p>").html(trivia[triviaQuestion].correct_answer)
     correctAnswer = correctAnswer.text();
     console.log(correctAnswer);
     answers.push(correctAnswer);
 
-    triviaData[triviaQuestion].incorrect_answers.forEach(el => {
+    trivia[triviaQuestion].incorrect_answers.forEach(el => {
       answers.push(el)
       console.log(answers);
     })
@@ -90,6 +100,11 @@ $(document).ready(function () {
     $($answer3).html(answers[2]);
     $($answer4).html(answers[3]);
 
+    $answer.mouseover(function () {
+      $(this).css({ "background-color": "#689B9F", "color": "#233435" });
+    }).mouseout(function () {
+      $(this).css({ "background-color": "#C4E1E3", "color": "#689B9F" });
+    });
   }
 
 
@@ -97,14 +112,18 @@ $(document).ready(function () {
     if (!userAnswer) {
       userAnswer = event.target.textContent;
 
+      // if user's guess is correct
       if (userAnswer === correctAnswer) {
         $(event.target).css({ "background-color": "#A6D49F", "color": "#2E3A2C" })
+        setTimeout(showCorrect, 500);
+        numberCorrect++;
 
       }
+      // if user's guess is incorrect
       else {
         $(event.target).css({ "background-color": "#5E0B15", "color": "#1A0306" })
-
         setTimeout(showCorrect, 500);
+        numberIncorrect++;
 
       }
     }
@@ -170,22 +189,55 @@ $(document).ready(function () {
 
 
   let newQuestion = function () {
-    if(triviaQuestion < 9) {
+    if (triviaQuestion < 10) {
       resetValues();
-      setQuestion();
-      setAnswers();
+      setQuestion(triviaData);
+      setAnswers(triviaData);
+
+      questionNumber++;
+      $questionNum.text(`Question ${questionNumber}/10`)
+
+      console.log(questionNumber)
       setTimeout(countdown, 1000);
     }
+    else {
+      $screen2.hide();
+      $answer.hide();
+      endGame();
+    }
+  }
+
+  let endGame = function () {
+    $screen1.hide();
+    $screen2.hide();
+    setTimeout(function () {
+      $screen3.fadeIn();
+      $("button.play-again").hide();
+    }, 250);
+
+    $correctResponses.text(numberCorrect);
+    $incorrectResponses.text(numberIncorrect);
+
+    triviaQuestion = 0;
+    numberCorrect = 0;
+    numberIncorrect = 0;
+
+    questionNumber = 1
+    $questionNum.text(`Question ${questionNumber}/10`)
+
+    resetValues();
   }
 
 
   let startGame = function () {
-    $($screen1, $screen3).fadeOut();
+
+    $screen1.fadeOut();
+    $screen3.fadeOut();
 
     setTimeout(function () {
-      $($screen2).fadeIn()
+      $screen2.fadeIn()
       timer = setTimeout(countdown, 1000);
-    }, 1000)
+    }, 500)
 
   }
 
@@ -219,7 +271,15 @@ $(document).ready(function () {
     $("button.play").show();
   });
 
-  $("button.play").on("click", function () {
+  $("select.category-choices-2").on("change", function (event) {
+    resetValues();
+    queryURL = `https://opentdb.com/api.php?amount=10&category=${this.value}&type=multiple`
+    getData();
+    console.log($("button.play-again").text())
+    $("button.play-again").show();
+  });
+
+  $("button.play, button.play-again").on("click", function () {
     startGame();
   });
 
