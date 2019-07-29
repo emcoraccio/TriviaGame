@@ -73,7 +73,7 @@ $(document).ready(function () {
     $.get(queryURL).then(function (response) {
 
       triviaData = response.results;
-      console.log(triviaData);
+
       let category = triviaData[0].category.toUpperCase();
       $("h1.title").text(`${category} TRIVIA`)
 
@@ -85,7 +85,6 @@ $(document).ready(function () {
 
   let setQuestion = function (trivia) {
 
-    console.log(triviaQuestion);
     thisQuestion = trivia[triviaQuestion].question
     let $p = $("<p>").html(thisQuestion)
     $question.append($p);
@@ -93,14 +92,14 @@ $(document).ready(function () {
 
 
   let setAnswers = function (trivia) {
+
     correctAnswer = $("<p>").html(trivia[triviaQuestion].correct_answer)
     correctAnswer = correctAnswer.text();
-    console.log(correctAnswer);
+
     answers.push(correctAnswer);
 
     trivia[triviaQuestion].incorrect_answers.forEach(el => {
       answers.push(el)
-      console.log(answers);
     })
 
     shuffle(answers);
@@ -128,9 +127,6 @@ $(document).ready(function () {
         setTimeout(showCorrect, 500);
         numberCorrect++;
         result = "Correct!"
-        $timer.css({ "background-color": "#AED7A7", "color": "#2E3A2C" })
-
-
       }
       // if user's guess is incorrect
       else {
@@ -139,7 +135,6 @@ $(document).ready(function () {
         numberIncorrect++;
 
         result = "Incorrect!"
-        $timer.css({ "background-color": "#5E0B15", "color": "#1A0306" })
       }
     }
 
@@ -185,6 +180,7 @@ $(document).ready(function () {
 
 
   let resetValues = function () {
+
     answers = [];
     userAnswer = "";
     color = 6;
@@ -205,6 +201,7 @@ $(document).ready(function () {
 
   let newQuestion = function () {
     triviaQuestion++
+
     if (triviaQuestion < 10) {
       resetValues();
       setQuestion(triviaData);
@@ -213,7 +210,6 @@ $(document).ready(function () {
       questionNumber = triviaQuestion + 1;
       $questionNum.text(`Question ${questionNumber}/10`)
 
-      console.log(questionNumber)
       setTimeout(countdown, 1000);
     }
     else {
@@ -221,6 +217,7 @@ $(document).ready(function () {
       $answer.hide();
       endGame();
     }
+
   }
 
   let endGame = function () {
@@ -266,11 +263,12 @@ $(document).ready(function () {
 
     $timer.text(`Time Left: ${seconds}`);
 
-    if (seconds < 11) {
+    if (seconds < 6) {
       $timer.css({ "background-color": "#5E0B15", "color": "#C4A6A9" })
     }
 
     if (seconds === 0 || userAnswer) {
+      
       if (!userAnswer) {
         userAnswer = true;
         numberIncorrect++
@@ -278,12 +276,26 @@ $(document).ready(function () {
         setTimeout(showCorrect, 500);
         setTimeout(newQuestion, 4500);
       }
+
       else {
+        seconds = 20;
         $timer.text(result);
+
+        if (result === "Correct!") {
+          $timer.css({ "background-color": "#AED7A7", "color": "#2E3A2C" })
+        }
+        
+        else {
+          $timer.css({ "background-color": "#5E0B15", "color": "#1A0306" })
+        }
+
       }
+
       clearTimeout(timer);
       return false;
+
     }
+    
     else {
       setTimeout(countdown, 1000)
     }
@@ -293,7 +305,6 @@ $(document).ready(function () {
     random = Math.floor(Math.random() * 24 + 9)
     $("option.random").val(random);
   }
-
 
 
   function backgroundSwitch() {
