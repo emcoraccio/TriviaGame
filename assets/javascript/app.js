@@ -143,7 +143,6 @@ $(document).ready(function () {
       }
     }
 
-    triviaQuestion++
     setTimeout(newQuestion, 4500);
   }
 
@@ -179,7 +178,7 @@ $(document).ready(function () {
         let correctColor = setTimeout(colorSwap, 1000);
       }
       else {
-        $(answerI).fadeOut("slow");
+        $(answerI).fadeTo("slow", .75);
       }
     }
   }
@@ -199,18 +198,19 @@ $(document).ready(function () {
     for (i = 0; i < 4; i++) {
 
       let answerI = $answer.get(i);
-      $(answerI).css({ "background-color": "#C4E1E3", "color": "#689B9F" })
+      $(answerI).css({ "background-color": "#C4E1E3", "color": "#689B9F" }).fadeTo("fast", 1);
     }
   }
 
 
   let newQuestion = function () {
+    triviaQuestion++
     if (triviaQuestion < 10) {
       resetValues();
       setQuestion(triviaData);
       setAnswers(triviaData);
 
-      questionNumber++;
+      questionNumber = triviaQuestion + 1;
       $questionNum.text(`Question ${questionNumber}/10`)
 
       console.log(questionNumber)
@@ -273,10 +273,10 @@ $(document).ready(function () {
     if (seconds === 0 || userAnswer) {
       if (!userAnswer) {
         userAnswer = true;
+        numberIncorrect++
         $timer.text(`Time's Up!`);
         setTimeout(showCorrect, 500);
         setTimeout(newQuestion, 4500);
-
       }
       else {
         $timer.text(result);

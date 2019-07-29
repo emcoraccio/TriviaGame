@@ -75,7 +75,7 @@ div.question, div.answer {
   font-family: 'Julius Sans One', sans-serif;
 }
 
-div.question, div.questionNum, h1, p.numCorrect, p.numIncorrect {
+div.question, div.questionNum, h1 {
   border-radius: 5px;
   color: #00284D;
   background-color: #A2B0BE;
@@ -95,6 +95,22 @@ div.answer {
 
 section.screen3 {
   display: none;
+}
+
+h1.game-over {
+  width: 100%;
+  border-radius: 0px;
+}
+
+div.correct {
+  background-color: #AED7A7;
+  color: #2E3A2C
+}
+
+div.incorrect {
+  background-color: #5E0B15; 
+  color: #1A0306;
+
 }
 
 p.numCorrect, p.numIncorrect {
