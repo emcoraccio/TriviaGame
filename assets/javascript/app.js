@@ -23,6 +23,7 @@ $(document).ready(function () {
   let triviaQuestion = 0;
   let numberCorrect = 0;
   let numberIncorrect = 0;
+  let random;
   let instance = M.FormSelect.getInstance("option");
 
 
@@ -263,9 +264,15 @@ $(document).ready(function () {
     }
   }
 
+  let randomValue = function() {
+    random = Math.floor(Math.random() * 24 + 9)
+    $("option.random").val(random);
+  }
+
   // events
   $("select.category-choices").on("change", function (event) {
     resetValues();
+    randomValue();
     queryURL = `https://opentdb.com/api.php?amount=10&category=${this.value}&type=multiple`
     getData();
     $("button.play").show();
@@ -273,9 +280,9 @@ $(document).ready(function () {
 
   $("select.category-choices-2").on("change", function (event) {
     resetValues();
+    randomValue();
     queryURL = `https://opentdb.com/api.php?amount=10&category=${this.value}&type=multiple`
     getData();
-    console.log($("button.play-again").text())
     $("button.play-again").show();
   });
 

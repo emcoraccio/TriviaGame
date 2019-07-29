@@ -69,6 +69,7 @@ p.countdown {
   color: #5E0B15;
 }
 
+/* question and answer styling */
 div.question, div.answer {
   padding: 2px;
   border-radius: 5px;
