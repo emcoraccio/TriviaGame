@@ -8,18 +8,23 @@ font-family: 'Philosopher', sans-serif;
 font-family: 'Alegreya Sans SC', sans-serif; */
 
 body {
-  background: url("../images/pawel-czerwinski-bX9B9c-YasY-unsplash.jpg") no-repeat center center fixed;
+  background: url("../images/javier-grixo-p1opmw12wvk-unsplash.jpg") no-repeat center center fixed;
   background-size: cover;
 
   text-align: center;
   font-family: 'Philosopher', sans-serif;
   color: #7EBDC2;
+  transition: 3s;
 }
 
 /* intro screen styling */
 section.screen1 {
   display: block;
   font-size: 24px;
+}
+
+div.instructions {
+  background: #00284D;
 }
 
 /* category choices styling */
@@ -77,7 +82,8 @@ div.question, div.answer {
   font-family: 'Julius Sans One', sans-serif;
 }
 
-div.question {
+div.question, div.questionNum, h1, p.numCorrect, p.numIncorrect {
+  border-radius: 5px;
   color: #00284D;
   background-color: #A2B0BE;
 }

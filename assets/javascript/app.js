@@ -264,15 +264,59 @@ $(document).ready(function () {
     }
   }
 
-  let randomValue = function() {
+  let randomValue = function () {
     random = Math.floor(Math.random() * 24 + 9)
     $("option.random").val(random);
   }
+
+
+  var bgImageArray = ["./assets/images/javier-grixo-p1opmw12wvk-unsplash.jpg", "./assets/images/dini_-qlUxJdtCdlU-unsplash.jpg", "./assets/images/fine-photographics-oKQfL5yCgJQ-unsplash.jpg", "./assets/images/nik-shuliahin-rkFIIE9PxH0-unsplash.jpg", "./assets/images/peter-lewicki-Wfh650C1OHU-unsplash.jpg", "./assets/images/michael-haslim-wtLNwq3cnQ8-unsplash.jpg"];
+  // var bgImageArray = ["https://unsplash.com/photos/qlUxJdtCdlU", "https://unsplash.com/photos/4iknJXlUCjo"];
+
+  // secs = 4;
+  bgImageArray.forEach(function (img) {
+    new Image().src = img;
+    // caches images, avoiding white flash between background replacements
+  });
+
+  function backgroundSwitch() {
+    k = 0;
+
+    console.log(event.target.value);
+
+    switch (event.target.value) {
+      case "29":
+        k = 1;
+        break;
+      case "20":
+        k = 2;
+        break;
+      case "22":
+        k = 3;
+        break;
+      case "13":
+        k = 4;
+        break;
+      case "14":
+        k = 5;
+        break;
+      default:
+        k = 0;
+        break;
+    }
+
+    $("body").css("background", "url('" + bgImageArray[k] + "') no-repeat center center fixed");
+    $("body").css("background-size", "cover");
+  }
+
+
+
 
   // events
   $("select.category-choices").on("change", function (event) {
     resetValues();
     randomValue();
+    backgroundSwitch();
     queryURL = `https://opentdb.com/api.php?amount=10&category=${this.value}&type=multiple`
     getData();
     $("button.play").show();
@@ -281,6 +325,7 @@ $(document).ready(function () {
   $("select.category-choices-2").on("change", function (event) {
     resetValues();
     randomValue();
+    backgroundSwitch();
     queryURL = `https://opentdb.com/api.php?amount=10&category=${this.value}&type=multiple`
     getData();
     $("button.play-again").show();
