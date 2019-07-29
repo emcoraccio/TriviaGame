@@ -24,7 +24,17 @@ $(document).ready(function () {
   let numberCorrect = 0;
   let numberIncorrect = 0;
   let random;
+  let result;
   let instance = M.FormSelect.getInstance("option");
+
+
+  var bgImageArray = ["./assets/images/javier-grixo-p1opmw12wvk-unsplash.jpg", "./assets/images/dini_-qlUxJdtCdlU-unsplash.jpg", "./assets/images/fine-photographics-oKQfL5yCgJQ-unsplash.jpg", "./assets/images/nik-shuliahin-rkFIIE9PxH0-unsplash.jpg", "./assets/images/peter-lewicki-Wfh650C1OHU-unsplash.jpg", "./assets/images/michael-haslim-wtLNwq3cnQ8-unsplash.jpg", "./assets/images/nick-jio-bYvo2ol_img-unsplash.jpg"];
+  // var bgImageArray = ["https://unsplash.com/photos/qlUxJdtCdlU", "https://unsplash.com/photos/4iknJXlUCjo"];
+
+  bgImageArray.forEach(function (img) {
+    new Image().src = img;
+    // caches images, avoiding white flash between background replacements
+  });
 
 
   // jquery variables
@@ -78,7 +88,7 @@ $(document).ready(function () {
     console.log(triviaQuestion);
     thisQuestion = trivia[triviaQuestion].question
     let $p = $("<p>").html(thisQuestion)
-    $($question).append($p);
+    $question.append($p);
   }
 
 
@@ -94,12 +104,11 @@ $(document).ready(function () {
     })
 
     shuffle(answers);
-    let answer1 = $("<p>").text(answers[0]);
 
-    $($answer1).html(answers[0]);
-    $($answer2).html(answers[1]);
-    $($answer3).html(answers[2]);
-    $($answer4).html(answers[3]);
+    $answer1.html(answers[0]);
+    $answer2.html(answers[1]);
+    $answer3.html(answers[2]);
+    $answer4.html(answers[3]);
 
     $answer.mouseover(function () {
       $(this).css({ "background-color": "#689B9F", "color": "#233435" });
@@ -118,6 +127,9 @@ $(document).ready(function () {
         $(event.target).css({ "background-color": "#A6D49F", "color": "#2E3A2C" })
         setTimeout(showCorrect, 500);
         numberCorrect++;
+        result = "Correct!"
+        $timer.css({ "background-color": "#AED7A7", "color": "#2E3A2C" })
+
 
       }
       // if user's guess is incorrect
@@ -126,17 +138,19 @@ $(document).ready(function () {
         setTimeout(showCorrect, 500);
         numberIncorrect++;
 
+        result = "Incorrect!"
+        $timer.css({ "background-color": "#5E0B15", "color": "#1A0306" })
       }
     }
 
     triviaQuestion++
-    setTimeout(newQuestion, 5000);
+    setTimeout(newQuestion, 4500);
   }
 
   function showCorrect() {
     for (i = 0; i < 4; i++) {
 
-      let answerI = $($answer).get(i);
+      let answerI = $answer.get(i);
 
       if ($(answerI).text() === correctAnswer) {
         let color = 6;
@@ -175,15 +189,16 @@ $(document).ready(function () {
     answers = [];
     userAnswer = "";
     color = 6;
-    seconds = 30;
-    $($timer).text(`Time Left: ${seconds}`);
-    $($answer).empty().show();
-    $($question).empty();
-    $($timer).css({ "background-color": "#C4A6A9", "color": "#5E0B15" })
+    seconds = 20;
+
+    $timer.text(`Time Left: ${seconds}`);
+    $answer.empty().show();
+    $question.empty();
+    $timer.css({ "background-color": "#C4A6A9", "color": "#5E0B15" })
 
     for (i = 0; i < 4; i++) {
 
-      let answerI = $($answer).get(i);
+      let answerI = $answer.get(i);
       $(answerI).css({ "background-color": "#C4E1E3", "color": "#689B9F" })
     }
   }
@@ -243,19 +258,29 @@ $(document).ready(function () {
   }
 
   //Timer code
-  let seconds = 30;
+  let seconds = 20;
 
   function countdown() {
 
     seconds--;
 
-    $($timer).text(`Time Left: ${seconds}`);
+    $timer.text(`Time Left: ${seconds}`);
 
     if (seconds < 11) {
-      $($timer).css({ "background-color": "#5E0B15", "color": "#C4A6A9" })
+      $timer.css({ "background-color": "#5E0B15", "color": "#C4A6A9" })
     }
 
     if (seconds === 0 || userAnswer) {
+      if (!userAnswer) {
+        userAnswer = true;
+        $timer.text(`Time's Up!`);
+        setTimeout(showCorrect, 500);
+        setTimeout(newQuestion, 4500);
+
+      }
+      else {
+        $timer.text(result);
+      }
       clearTimeout(timer);
       return false;
     }
@@ -270,14 +295,6 @@ $(document).ready(function () {
   }
 
 
-  var bgImageArray = ["./assets/images/javier-grixo-p1opmw12wvk-unsplash.jpg", "./assets/images/dini_-qlUxJdtCdlU-unsplash.jpg", "./assets/images/fine-photographics-oKQfL5yCgJQ-unsplash.jpg", "./assets/images/nik-shuliahin-rkFIIE9PxH0-unsplash.jpg", "./assets/images/peter-lewicki-Wfh650C1OHU-unsplash.jpg", "./assets/images/michael-haslim-wtLNwq3cnQ8-unsplash.jpg"];
-  // var bgImageArray = ["https://unsplash.com/photos/qlUxJdtCdlU", "https://unsplash.com/photos/4iknJXlUCjo"];
-
-  // secs = 4;
-  bgImageArray.forEach(function (img) {
-    new Image().src = img;
-    // caches images, avoiding white flash between background replacements
-  });
 
   function backgroundSwitch() {
     k = 0;
@@ -300,6 +317,9 @@ $(document).ready(function () {
       case "14":
         k = 5;
         break;
+      case "21":
+        k = 6;
+        break;
       default:
         k = 0;
         break;
@@ -308,7 +328,6 @@ $(document).ready(function () {
     $("body").css("background", "url('" + bgImageArray[k] + "') no-repeat center center fixed");
     $("body").css("background-size", "cover");
   }
-
 
 
 
