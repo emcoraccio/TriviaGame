@@ -16,8 +16,13 @@ section.screen1 {
   font-size: 24px;
 }
 
+h1 {
+  color: rgb(0, 40, 77);
+  background-color: rgb(162, 176, 190, .5);
+}
+
 div.instructions {
-  background: #00284D;
+  background: rgb(0, 40, 77, .5);
 }
 
 /* category choices styling */
@@ -75,7 +80,7 @@ div.question, div.answer {
   font-family: 'Julius Sans One', sans-serif;
 }
 
-div.question, div.questionNum, h1 {
+div.question, div.questionNum {
   border-radius: 5px;
   color: #00284D;
   background-color: #A2B0BE;

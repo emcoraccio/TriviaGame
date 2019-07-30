@@ -28,7 +28,7 @@ $(document).ready(function () {
   let instance = M.FormSelect.getInstance("option");
 
 
-  var bgImageArray = ["./assets/images/javier-grixo-p1opmw12wvk-unsplash.jpg", "./assets/images/dini_-qlUxJdtCdlU-unsplash.jpg", "./assets/images/fine-photographics-oKQfL5yCgJQ-unsplash.jpg", "./assets/images/nik-shuliahin-rkFIIE9PxH0-unsplash.jpg", "./assets/images/peter-lewicki-Wfh650C1OHU-unsplash.jpg", "./assets/images/michael-haslim-wtLNwq3cnQ8-unsplash.jpg", "./assets/images/nick-jio-bYvo2ol_img-unsplash.jpg"];
+  var bgImageArray = ["./assets/images/javier-grixo-p1opmw12wvk-unsplash.jpg", "./assets/images/lena-rose-ydHrpfgJNPo-unsplash.jpg", "./assets/images/fine-photographics-oKQfL5yCgJQ-unsplash.jpg", "./assets/images/nik-shuliahin-rkFIIE9PxH0-unsplash.jpg", "./assets/images/peter-lewicki-Wfh650C1OHU-unsplash.jpg", "./assets/images/michael-haslim-wtLNwq3cnQ8-unsplash.jpg", "./assets/images/nick-jio-bYvo2ol_img-unsplash.jpg"];
   // var bgImageArray = ["https://unsplash.com/photos/qlUxJdtCdlU", "https://unsplash.com/photos/4iknJXlUCjo"];
 
   bgImageArray.forEach(function (img) {
@@ -269,7 +269,7 @@ $(document).ready(function () {
 
     if (seconds === 0 || userAnswer) {
       
-      if (!userAnswer) {
+      if (seconds < 1) {
         userAnswer = true;
         numberIncorrect++
         $timer.text(`Time's Up!`);

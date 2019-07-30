@@ -15,14 +15,14 @@
 
 ## Functions
 
-* Functions Include but are not limited to:
+#### Functions Include but are not limited to:
 
-** getData
-** shuffle
-** setQuestion
-** setAnswers
-** checkAnswer
-** showCorrect
-** resetValues
-** endGame
+* getData
+* shuffle
+* setQuestion
+* setAnswers
+* checkAnswer
+* showCorrect
+* resetValues
+* endGame
 
