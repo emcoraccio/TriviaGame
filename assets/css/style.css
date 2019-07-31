@@ -7,6 +7,7 @@ body {
   text-align: center;
   font-family: 'Philosopher', sans-serif;
   color: #7EBDC2;
+
   transition: 3s;
 }
 
@@ -36,7 +37,7 @@ option {
 
 div.input-field {
   border-radius: 5px;
-  background: #B8DBDD;
+  background: rgb(184, 219, 221, .75);
 }
 
 /* play button styling */
@@ -57,6 +58,8 @@ section.screen2 {
 
 p.questionNum {
   font-size: 24px;
+  background-color: rgb(0, 40, 77, .75);
+  /* justify-content: center; */
 }
 
 /* timer styling */
@@ -68,8 +71,9 @@ p.countdown {
   padding: 5px;
   border-radius: 5px;
   font-size: 20px;
-  background-color: #C4A6A9;
-  color: #5E0B15;
+  background-color: rgb(196, 166, 169, .9);
+  color: #5E0B15; 
+  background-color: rgb(174, 215, 167, .9)
 }
 
 /* question and answer styling */
@@ -83,7 +87,7 @@ div.question, div.answer {
 div.question, div.questionNum {
   border-radius: 5px;
   color: #00284D;
-  background-color: #A2B0BE;
+  background-color: rgb(162, 176, 190, .9);
 }
 
 div.answer {
@@ -91,8 +95,8 @@ div.answer {
   margin: 10px;
   cursor: pointer;
   min-height: 50px;
-  color: #689B9F;
-  background-color: #C4E1E3;
+  color: #233435;
+  background-color: rgb(196, 225, 227, .9);
 }
 
 
@@ -108,14 +112,14 @@ h1.game-over {
 }
 
 div.correct {
-  background-color: #AED7A7;
+  background-color: rgb(174, 215, 167, .75);
   color: #2E3A2C
 }
 
 div.incorrect {
-  background-color: #5E0B15; 
-  color: #1A0306;
-
+  background-color: rgb(94, 11, 21, .75); 
+  /* color: #1A0306; */
+  color: #C4A6A9
 }
 
 p.numCorrect, p.numIncorrect {

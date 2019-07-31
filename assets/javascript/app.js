@@ -110,9 +110,13 @@ $(document).ready(function () {
     $answer4.html(answers[3]);
 
     $answer.mouseover(function () {
-      $(this).css({ "background-color": "#689B9F", "color": "#233435" });
+      $(this).css(
+        "background-color", "rgb(104, 155, 159, .9)"
+        // "color": "#233435"
+      );
     }).mouseout(function () {
-      $(this).css({ "background-color": "#C4E1E3", "color": "#689B9F" });
+      $(this).css("background-color", "rgb(196, 225, 227, .9)")
+      // "color": "#689B9F" )
     });
   }
 
@@ -123,14 +127,21 @@ $(document).ready(function () {
 
       // if user's guess is correct
       if (userAnswer === correctAnswer) {
-        $(event.target).css({ "background-color": "#A6D49F", "color": "#2E3A2C" })
+        $(event.target).css({
+          "background-color": "rgb(166, 212, 159, .9)",
+          "color": "#2E3A2C"
+        })
         setTimeout(showCorrect, 500);
         numberCorrect++;
         result = "Correct!"
       }
       // if user's guess is incorrect
       else {
-        $(event.target).css({ "background-color": "#5E0B15", "color": "#1A0306" })
+        $(event.target).css({
+          "background-color": "rgb(94, 11, 21, .9)",
+          "color": "#1A0306"
+        })
+
         setTimeout(showCorrect, 500);
         numberIncorrect++;
 
@@ -138,7 +149,10 @@ $(document).ready(function () {
       }
     }
 
-    setTimeout(newQuestion, 4500);
+    if ($timer.text() != "Time's Up!") {
+      setTimeout(newQuestion, 4500);
+
+    }
   }
 
   function showCorrect() {
@@ -154,10 +168,16 @@ $(document).ready(function () {
           color--;
 
           if (color % 2 === 0) {
-            $(answerI).css({ "background-color": "#A6D49F", "color": "#2E3A2C" })
+            $(answerI).css({
+              "background-color": "rgb(166, 212, 159, .9)",
+              "color": "#2E3A2C"
+            })
           }
           else {
-            $(answerI).css({ "background-color": "#C4E1E3", "color": "#689B9F" })
+            $(answerI).css({
+              "background-color": "rgb(196, 225, 227, .9)",
+              "color": "#689B9F"
+            })
           }
 
           // stop the color from blinking
@@ -173,7 +193,7 @@ $(document).ready(function () {
         let correctColor = setTimeout(colorSwap, 1000);
       }
       else {
-        $(answerI).fadeTo("slow", .75);
+        $(answerI).fadeTo("slow", .5);
       }
     }
   }
@@ -189,12 +209,18 @@ $(document).ready(function () {
     $timer.text(`Time Left: ${seconds}`);
     $answer.empty().show();
     $question.empty();
-    $timer.css({ "background-color": "#C4A6A9", "color": "#5E0B15" })
+    $timer.css({
+      "background-color": "rgb(196, 166, 169, .9)",
+      "color": "#5E0B15"
+    })
 
     for (i = 0; i < 4; i++) {
 
       let answerI = $answer.get(i);
-      $(answerI).css({ "background-color": "#C4E1E3", "color": "#689B9F" }).fadeTo("fast", 1);
+      $(answerI).css({
+        "background-color": "rgb(196, 225, 227, .9)",
+        "color": "#233435"
+      }).fadeTo("fast", 1);
     }
   }
 
@@ -254,6 +280,47 @@ $(document).ready(function () {
 
   }
 
+  function timeUp() {
+    if (seconds === 0 || userAnswer) {
+
+      if (seconds < 1 && !userAnswer) {
+        userAnswer = true;
+        numberIncorrect++
+        $timer.text(`Time's Up!`);
+        setTimeout(showCorrect, 500);
+        setTimeout(newQuestion, 4500);
+        console.log("Time is up, next question")
+      }
+
+      else {
+        seconds = 20;
+        $timer.text(result);
+
+        if (result === "Correct!") {
+          $timer.css({
+            "background-color": "rgb(174, 215, 167, .9)",
+            "color": "#2E3A2C"
+          })
+        }
+
+        else {
+          $timer.css({
+            "background-color": "rgb(94, 11, 21, .9)",
+            "color": "#1A0306"
+          })
+        }
+
+      }
+
+      clearTimeout(timer);
+      return false;
+
+    }
+    else {
+      setTimeout(countdown, 1000)
+    }
+  }
+
   //Timer code
   let seconds = 20;
 
@@ -264,49 +331,23 @@ $(document).ready(function () {
     $timer.text(`Time Left: ${seconds}`);
 
     if (seconds < 6) {
-      $timer.css({ "background-color": "#5E0B15", "color": "#C4A6A9" })
+      $timer.css({
+        "background-color": "rgb(94, 11, 21, .9)",
+        "color": "#C4A6A9"
+      })
     }
 
-    if (seconds === 0 || userAnswer) {
-      
-      if (seconds < 1) {
-        userAnswer = true;
-        numberIncorrect++
-        $timer.text(`Time's Up!`);
-        setTimeout(showCorrect, 500);
-        setTimeout(newQuestion, 4500);
-      }
+    timeUp();
 
-      else {
-        seconds = 20;
-        $timer.text(result);
-
-        if (result === "Correct!") {
-          $timer.css({ "background-color": "#AED7A7", "color": "#2E3A2C" })
-        }
-        
-        else {
-          $timer.css({ "background-color": "#5E0B15", "color": "#1A0306" })
-        }
-
-      }
-
-      clearTimeout(timer);
-      return false;
-
-    }
-    
-    else {
-      setTimeout(countdown, 1000)
-    }
   }
 
+  //setting random category
   let randomValue = function () {
     random = Math.floor(Math.random() * 24 + 9)
     $("option.random").val(random);
   }
 
-
+  //accessing available backgrounds for specific category
   function backgroundSwitch() {
     k = 0;
 
