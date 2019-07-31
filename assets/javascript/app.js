@@ -147,12 +147,12 @@ $(document).ready(function () {
 
         result = "Incorrect!"
       }
+      
+      if ($timer.text() != "Time's Up!") {
+        setTimeout(newQuestion, 4500);
+      }
     }
 
-    if ($timer.text() != "Time's Up!") {
-      setTimeout(newQuestion, 4500);
-
-    }
   }
 
   function showCorrect() {
