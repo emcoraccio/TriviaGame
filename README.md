@@ -26,3 +26,6 @@
 * resetValues
 * endGame
 
+## Where to Play
+
+https://emcoraccio.github.io/TriviaGame/
